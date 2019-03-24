@@ -10,7 +10,7 @@
 npm install --save use-countdown-timer
 ```
 
-## Props
+## Parameters and Return Types
 
 `use-countdown-timer` is written in TypeScript and bundles type definitions.
 
