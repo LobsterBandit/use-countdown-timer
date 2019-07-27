@@ -1,11 +1,13 @@
 {
-  "main.js": "/use-countdown-timer/static/js/main.22272e07.chunk.js",
-  "main.js.map": "/use-countdown-timer/static/js/main.22272e07.chunk.js.map",
-  "runtime~main.js": "/use-countdown-timer/static/js/runtime~main.b986ef82.js",
-  "runtime~main.js.map": "/use-countdown-timer/static/js/runtime~main.b986ef82.js.map",
-  "static/js/2.27dc9747.chunk.js": "/use-countdown-timer/static/js/2.27dc9747.chunk.js",
-  "static/js/2.27dc9747.chunk.js.map": "/use-countdown-timer/static/js/2.27dc9747.chunk.js.map",
-  "index.html": "/use-countdown-timer/index.html",
-  "precache-manifest.988c725d30d7daf9eff9a1792289cf27.js": "/use-countdown-timer/precache-manifest.988c725d30d7daf9eff9a1792289cf27.js",
-  "service-worker.js": "/use-countdown-timer/service-worker.js"
+  "files": {
+    "main.js": "/use-countdown-timer/static/js/main.bdfbc115.chunk.js",
+    "main.js.map": "/use-countdown-timer/static/js/main.bdfbc115.chunk.js.map",
+    "runtime~main.js": "/use-countdown-timer/static/js/runtime~main.b986ef82.js",
+    "runtime~main.js.map": "/use-countdown-timer/static/js/runtime~main.b986ef82.js.map",
+    "static/js/2.6024b975.chunk.js": "/use-countdown-timer/static/js/2.6024b975.chunk.js",
+    "static/js/2.6024b975.chunk.js.map": "/use-countdown-timer/static/js/2.6024b975.chunk.js.map",
+    "index.html": "/use-countdown-timer/index.html",
+    "precache-manifest.e41b2053688172a90145db384d67f9cc.js": "/use-countdown-timer/precache-manifest.e41b2053688172a90145db384d67f9cc.js",
+    "service-worker.js": "/use-countdown-timer/service-worker.js"
+  }
 }
