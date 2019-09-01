@@ -1,6 +1,6 @@
 {
   "name": "use-countdown-timer",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "React hook exposing a countdown timer with optional expiration and reset callbacks",
   "keywords": [
     "countdown",
