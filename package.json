@@ -35,27 +35,27 @@
     "react": "^16.8.6"
   },
   "devDependencies": {
-    "@types/node": "^12.6.8",
-    "@types/react": "^16.8.23",
+    "@types/node": "^12.7.3",
+    "@types/react": "^16.9.2",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.1",
-    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.1.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.6.1",
-    "gh-pages": "^2.0.1",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "gh-pages": "^2.1.1",
     "prettier": "^1.18.2",
-    "react": "^16.8.6",
-    "rollup": "^1.17.0",
+    "react": "^16.9.0",
+    "rollup": "^1.20.3",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-typescript2": "^0.22.1",
+    "rollup-plugin-typescript2": "^0.24.0",
     "rollup-plugin-url": "^2.2.2",
-    "typescript": "^3.5.3"
+    "typescript": "^3.6.2"
   }
 }
