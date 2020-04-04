@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useCountdownTimer } from 'use-countdown-timer';
 
 export default function App() {
-  const { countdown, start, reset } = useCountdownTimer({
-    timer: 1000 * 5,
+  const [timer] = useState(1000 * 5);
+  const { countdown, start, reset, pause, isRunning } = useCountdownTimer({
+    timer,
     onExpire: () => {
       setActions(actions => [...actions, 'Expire Callback']);
     },
@@ -19,9 +20,13 @@ export default function App() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <div>{countdown}</div>
-      <button onClick={() => logAction('Start', start)}>Start</button>
+      {!isRunning ? (
+        <button onClick={() => logAction('Start', start)}>Start</button>
+      ) : (
+        <button onClick={() => logAction('Pause', pause)}>Pause</button>
+      )}
       <button onClick={() => logAction('Reset', reset)}>Reset</button>
 
       <p>Actions Taken</p>
@@ -30,6 +35,6 @@ export default function App() {
           <li key={`${action}-${index}`}>{action}</li>
         ))}
       </ul>
-    </React.Fragment>
+    </>
   );
 }

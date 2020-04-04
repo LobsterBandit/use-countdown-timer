@@ -26,26 +26,34 @@ export interface ICountdownTimerParams {
 
 export declare type CountdownTimerResults = {
   countdown: number;
+  isRunning: boolean;
   start: () => void;
   reset: () => void;
+  pause: () => void;
 };
 ```
 
 ## Usage
 
 ```tsx
-import * as React from 'react';
+import React from 'react';
 
 import { useCountdownTimer } from 'use-countdown-timer';
 
 const Example = () => {
-  const { countdown, start, reset } = useCountdownTimer({ timer: 1000 * 5 });
+  const { countdown, start, reset, pause, isRunning } = useCountdownTimer({
+    timer: 1000 * 5,
+  });
 
   return (
     <React.Fragment>
       <div>{countdown}</div>
       <button onClick={reset}>Reset</button>
-      <button onClick={start}>Start</button>
+      {isRunning ? (
+        <button onClick={pause}>Pause</button>
+      ) : (
+        <button onClick={start}>Start</button>
+      )}
     </React.Fragment>
   );
 };
