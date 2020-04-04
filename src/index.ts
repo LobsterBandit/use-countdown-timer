@@ -11,8 +11,10 @@ export interface ICountdownTimerParams {
 
 export type CountdownTimerResults = {
   countdown: number;
+  isRunning: boolean;
   start: () => void;
   reset: () => void;
+  pause: () => void;
 };
 
 export function useCountdownTimer({
@@ -25,22 +27,32 @@ export function useCountdownTimer({
 }: ICountdownTimerParams): CountdownTimerResults {
   const [countdown, setCountdown] = useState(timer);
   const [canStart, setCanStart] = useState(autostart);
+  const [isRunning, setIsRunning] = useState(false);
 
   function start(): void {
     setCanStart(true);
   }
 
-  const reset = useCallback(() => {
+  function pause(): void {
     setCanStart(false);
-    setCountdown(timer);
+    setIsRunning(false);
+  }
+
+  function initStopped(time: number) {
+    setCanStart(false);
+    setIsRunning(false);
+    setCountdown(time);
+  }
+
+  const reset = useCallback(() => {
+    initStopped(timer);
     if (onReset && typeof onReset === 'function') {
       onReset();
     }
   }, [timer, onReset]);
 
   const expire = useCallback(() => {
-    setCanStart(false);
-    setCountdown(timer);
+    initStopped(timer);
     if (onExpire && typeof onExpire === 'function') {
       onExpire();
     }
@@ -66,13 +78,18 @@ export function useCountdownTimer({
     let id: NodeJS.Timeout;
     if (canStart) {
       id = setInterval(tick, interval);
+      if (!isRunning) {
+        setIsRunning(true);
+      }
     }
     return () => clearInterval(id);
-  }, [expire, canStart, interval, expireImmediate]);
+  }, [expire, canStart, interval, expireImmediate, isRunning]);
 
   return {
     countdown,
     start,
     reset,
+    pause,
+    isRunning,
   };
 }
