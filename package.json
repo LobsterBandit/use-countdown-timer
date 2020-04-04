@@ -24,6 +24,9 @@
     "node": ">=8",
     "npm": ">=5"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
