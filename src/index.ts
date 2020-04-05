@@ -29,11 +29,11 @@ export function useCountdownTimer({
   const [canStart, setCanStart] = useState(autostart);
   const [isRunning, setIsRunning] = useState(false);
 
-  function start(): void {
+  function start() {
     setCanStart(true);
   }
 
-  function pause(): void {
+  function pause() {
     setCanStart(false);
     setIsRunning(false);
   }

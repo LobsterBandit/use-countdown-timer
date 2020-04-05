@@ -4,10 +4,12 @@
     "project": "./tsconfig.json"
   },
   "extends": [
-    "airbnb",
+    "airbnb-typescript",
     "prettier",
     "prettier/@typescript-eslint",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "plugins": ["prettier", "@typescript-eslint", "react-hooks"],
   "rules": {
@@ -15,6 +17,31 @@
     "@typescript-eslint/indent": ["error", 2],
     "prettier/prettier": ["error"],
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
-  }
+    "react-hooks/exhaustive-deps": "warn",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/interface-name-prefix": [
+      "error",
+      { "prefixWithI": "always" }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.test.ts"],
+      "env": {
+        "jest": true
+      },
+      "plugins": ["jest"],
+      "rules": {
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error",
+        "import/no-extraneous-dependencies": [
+          "error",
+          { "devDependencies": true }
+        ]
+      }
+    }
+  ]
 }
