@@ -5,6 +5,7 @@
 [![CI](https://github.com/LobsterBandit/use-countdown-timer/workflows/CI/badge.svg)](https://github.com/LobsterBandit/use-countdown-timer/actions?query=workflow%3ACI)
 [![NPM](https://img.shields.io/npm/v/use-countdown-timer.svg)](https://www.npmjs.com/package/use-countdown-timer)
 [![Bundlephobia](https://img.shields.io/bundlephobia/minzip/use-countdown-timer.svg)](https://bundlephobia.com/result?p=use-countdown-timer)
+[![Coverage Status](https://coveralls.io/repos/github/LobsterBandit/use-countdown-timer/badge.svg?branch=master)](https://coveralls.io/github/LobsterBandit/use-countdown-timer?branch=master)
 
 ## Install
 
