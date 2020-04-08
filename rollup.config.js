@@ -6,6 +6,8 @@ import url from '@rollup/plugin-url';
 
 import pkg from './package.json';
 
+const tsconfigOverride = { exclude: ['src/**/*.test.ts'] };
+
 export default {
   input: 'src/index.ts',
   output: [
@@ -27,8 +29,8 @@ export default {
     url({ exclude: ['**/*.svg'] }),
     resolve(),
     typescript({
-      rollupCommonJSResolveHack: true,
       clean: true,
+      tsconfigOverride,
     }),
     commonjs(),
   ],
