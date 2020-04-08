@@ -21,3 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 
 **/*.tgz
+
+# jest test coverage
+coverage
