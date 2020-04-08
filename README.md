@@ -2,7 +2,9 @@
 
 > React hook exposing a countdown timer with optional expiration and reset callbacks
 
-![CI](https://github.com/LobsterBandit/use-countdown-timer/workflows/CI/badge.svg) [![NPM](https://img.shields.io/npm/v/use-countdown-timer.svg)](https://www.npmjs.com/package/use-countdown-timer) [![Bundlephobia](https://img.shields.io/bundlephobia/minzip/use-countdown-timer.svg)](https://bundlephobia.com/result?p=use-countdown-timer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-airbnb-ff5a5f.svg)](https://www.npmjs.com/package/eslint-config-airbnb) [![Code Formatting](https://img.shields.io/badge/formatting-prettier-ff69b4.svg)](https://prettier.io/)
+[![CI](https://github.com/LobsterBandit/use-countdown-timer/workflows/CI/badge.svg)](https://github.com/LobsterBandit/use-countdown-timer/actions?query=workflow%3ACI)
+[![NPM](https://img.shields.io/npm/v/use-countdown-timer.svg)](https://www.npmjs.com/package/use-countdown-timer)
+[![Bundlephobia](https://img.shields.io/bundlephobia/minzip/use-countdown-timer.svg)](https://bundlephobia.com/result?p=use-countdown-timer)
 
 ## Install
 
