@@ -55,7 +55,7 @@ describe('useCountdownTimer', () => {
   });
 
   describe('after expiration', () => {
-    it('countdown resets to timer', () => {
+    it('countdown resets to timer w/ resetOnExpire: true', () => {
       const timer = 5 * 1000;
       const { result } = renderHook(() =>
         useCountdownTimer({ timer, autostart: true })
@@ -66,6 +66,60 @@ describe('useCountdownTimer', () => {
       });
 
       expect(result.current.countdown).toBe(timer);
+    });
+
+    it('countdown does not reset to timer w/ resetOnExpire: false', () => {
+      const timer = 5 * 1000;
+      const { result } = renderHook(() =>
+        useCountdownTimer({ timer, autostart: true, resetOnExpire: false })
+      );
+
+      act(() => {
+        jest.runAllTimers();
+      });
+
+      expect(result.current.countdown).toBe(0);
+    });
+
+    it('must reset before start w/ resetOnExpire: false', () => {
+      const timer = 5 * 1000;
+      const onExpire = jest.fn();
+      const { result } = renderHook(() =>
+        useCountdownTimer({
+          timer,
+          autostart: true,
+          onExpire,
+          resetOnExpire: false,
+        })
+      );
+
+      act(() => {
+        jest.runAllTimers();
+      });
+
+      expect(result.current.countdown).toBe(0);
+      expect(onExpire).toHaveBeenCalledTimes(1);
+
+      act(() => {
+        result.current.start();
+      });
+
+      // start without reset = noop and no onExpire call
+      expect(result.current.countdown).toBe(0);
+      expect(onExpire).toHaveBeenCalledTimes(1);
+
+      act(() => {
+        result.current.reset();
+      });
+
+      act(() => {
+        result.current.start();
+        jest.runAllTimers();
+      });
+
+      // reset before start = running timer and onExpire called
+      expect(result.current.countdown).toBe(0);
+      expect(onExpire).toHaveBeenCalledTimes(2);
     });
 
     it('countdown is not running w/ autostart: true', () => {
