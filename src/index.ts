@@ -58,7 +58,7 @@ export function useCountdownTimer({
     if (onExpire && typeof onExpire === 'function') {
       onExpire();
     }
-  }, [timer, onExpire]);
+  }, [timer, onExpire, resetOnExpire]);
 
   const countdownRef = useRef<number>(timer);
   useEffect(() => {
