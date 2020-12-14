@@ -5,6 +5,7 @@ export interface ICountdownTimerParams {
   interval?: number;
   autostart?: boolean;
   expireImmediate?: boolean;
+  resetOnExpire?: boolean;
   onExpire?: () => void;
   onReset?: () => void;
 }
@@ -22,6 +23,7 @@ export function useCountdownTimer({
   interval = 1000,
   autostart = false,
   expireImmediate = false,
+  resetOnExpire = true,
   onExpire,
   onReset,
 }: ICountdownTimerParams): CountdownTimerResults {
@@ -52,7 +54,7 @@ export function useCountdownTimer({
   }, [timer, onReset]);
 
   const expire = useCallback(() => {
-    initStopped(timer);
+    initStopped(resetOnExpire ? timer : 0);
     if (onExpire && typeof onExpire === 'function') {
       onExpire();
     }
