@@ -68,6 +68,19 @@ describe('useCountdownTimer', () => {
       expect(result.current.countdown).toBe(timer);
     });
 
+    it('countdown not resets to timer', () => {
+      const timer = 5 * 1000;
+      const { result } = renderHook(() =>
+        useCountdownTimer({ timer, autostart: true, resetOnExpire: false })
+      );
+
+      act(() => {
+        jest.runAllTimers();
+      });
+
+      expect(result.current.countdown).toBe(0);
+    });
+
     it('countdown is not running w/ autostart: true', () => {
       const timer = 5 * 1000;
       const { result } = renderHook(() =>
