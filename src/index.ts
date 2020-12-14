@@ -32,7 +32,10 @@ export function useCountdownTimer({
   const [isRunning, setIsRunning] = useState(false);
 
   function start() {
-    setCanStart(true);
+    // must explicitly call reset() before starting an expired timer
+    if (countdown !== 0) {
+      setCanStart(true);
+    }
   }
 
   function pause() {
