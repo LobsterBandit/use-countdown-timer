@@ -10,15 +10,6 @@ const external = [
   ...Object.keys(pkg.peerDependencies || {}),
 ]
 
-const getPlugins = (format = 'esm') => {
-  const typeScriptOptions =
-    format === 'esm'
-      ? { declaration: true, declarationDir: path.dirname(pkg.module) }
-      : {}
-
-  return [resolve(), typescript(typeScriptOptions), commonjs()]
-}
-
 export default [
   {
     input,
