@@ -1,89 +1,89 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import { useCountdownTimer } from '.';
+import { renderHook, act } from '@testing-library/react-hooks'
+import { useCountdownTimer } from '.'
 
 describe('useCountdownTimer', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
-  });
+    jest.useFakeTimers()
+  })
 
   describe('initialization', () => {
     it('sets countdown to timer param', () => {
-      const timer = 5 * 1000;
-      const { result } = renderHook(() => useCountdownTimer({ timer }));
-      expect(result.current.countdown).toBe(timer);
-    });
+      const timer = 5 * 1000
+      const { result } = renderHook(() => useCountdownTimer({ timer }))
+      expect(result.current.countdown).toBe(timer)
+    })
 
     it('starts in a not running state', () => {
-      const timer = 5 * 1000;
-      const { result } = renderHook(() => useCountdownTimer({ timer }));
-      expect(result.current.isRunning).toBe(false);
-    });
+      const timer = 5 * 1000
+      const { result } = renderHook(() => useCountdownTimer({ timer }))
+      expect(result.current.isRunning).toBe(false)
+    })
 
     it('autostart param immediately starts countdown', () => {
       const { result } = renderHook(() =>
         useCountdownTimer({ timer: 5 * 1000, autostart: true })
-      );
+      )
 
       act(() => {
-        jest.advanceTimersByTime(1000);
-      });
+        jest.advanceTimersByTime(1000)
+      })
 
-      expect(result.current.countdown).toBe(4 * 1000);
-    });
+      expect(result.current.countdown).toBe(4 * 1000)
+    })
 
     it('custom interval', () => {
-      const interval = 999;
-      const timer = 1 + interval;
+      const interval = 999
+      const timer = 1 + interval
       const { result } = renderHook(() =>
         useCountdownTimer({ timer, interval, autostart: true })
-      );
+      )
 
       act(() => {
-        jest.advanceTimersByTime(interval);
-      });
+        jest.advanceTimersByTime(interval)
+      })
 
-      expect(result.current.isRunning).toBe(true);
-      expect(result.current.countdown).toBe(1);
+      expect(result.current.isRunning).toBe(true)
+      expect(result.current.countdown).toBe(1)
 
       act(() => {
-        jest.runAllTimers();
-      });
+        jest.runAllTimers()
+      })
 
-      expect(result.current.isRunning).toBe(false);
-      expect(result.current.countdown).toBe(timer);
-    });
-  });
+      expect(result.current.isRunning).toBe(false)
+      expect(result.current.countdown).toBe(timer)
+    })
+  })
 
   describe('after expiration', () => {
     it('countdown resets to timer w/ resetOnExpire: true', () => {
-      const timer = 5 * 1000;
+      const timer = 5 * 1000
       const { result } = renderHook(() =>
         useCountdownTimer({ timer, autostart: true })
-      );
+      )
 
       act(() => {
-        jest.runAllTimers();
-      });
+        jest.runAllTimers()
+      })
 
-      expect(result.current.countdown).toBe(timer);
-    });
+      expect(result.current.countdown).toBe(timer)
+    })
 
     it('countdown does not reset to timer w/ resetOnExpire: false', () => {
-      const timer = 5 * 1000;
+      const timer = 5 * 1000
       const { result } = renderHook(() =>
         useCountdownTimer({ timer, autostart: true, resetOnExpire: false })
-      );
+      )
 
       act(() => {
-        jest.runAllTimers();
-      });
+        jest.runAllTimers()
+      })
 
-      expect(result.current.countdown).toBe(0);
-    });
+      expect(result.current.countdown).toBe(0)
+    })
 
     it('must reset before start w/ resetOnExpire: false', () => {
-      const timer = 5 * 1000;
-      const onExpire = jest.fn();
+      const timer = 5 * 1000
+      const onExpire = jest.fn()
       const { result } = renderHook(() =>
         useCountdownTimer({
           timer,
@@ -91,138 +91,136 @@ describe('useCountdownTimer', () => {
           onExpire,
           resetOnExpire: false,
         })
-      );
+      )
 
       act(() => {
-        jest.runAllTimers();
-      });
+        jest.runAllTimers()
+      })
 
-      expect(result.current.countdown).toBe(0);
-      expect(onExpire).toHaveBeenCalledTimes(1);
+      expect(result.current.countdown).toBe(0)
+      expect(onExpire).toHaveBeenCalledTimes(1)
 
       act(() => {
-        result.current.start();
-      });
+        result.current.start()
+      })
 
       // start without reset = noop and no onExpire call
-      expect(result.current.countdown).toBe(0);
-      expect(onExpire).toHaveBeenCalledTimes(1);
+      expect(result.current.countdown).toBe(0)
+      expect(onExpire).toHaveBeenCalledTimes(1)
 
       act(() => {
-        result.current.reset();
-      });
+        result.current.reset()
+      })
 
       act(() => {
-        result.current.start();
-        jest.runAllTimers();
-      });
+        result.current.start()
+        jest.runAllTimers()
+      })
 
       // reset before start = running timer and onExpire called
-      expect(result.current.countdown).toBe(0);
-      expect(onExpire).toHaveBeenCalledTimes(2);
-    });
+      expect(result.current.countdown).toBe(0)
+      expect(onExpire).toHaveBeenCalledTimes(2)
+    })
 
     it('countdown is not running w/ autostart: true', () => {
-      const timer = 5 * 1000;
+      const timer = 5 * 1000
       const { result } = renderHook(() =>
         useCountdownTimer({ timer, autostart: true })
-      );
+      )
 
       act(() => {
-        jest.runAllTimers();
-      });
+        jest.runAllTimers()
+      })
 
-      expect(result.current.countdown).toBe(timer);
-      expect(result.current.isRunning).toBe(false);
-    });
+      expect(result.current.countdown).toBe(timer)
+      expect(result.current.isRunning).toBe(false)
+    })
 
     it('countdown is not running w/ autostart: false', () => {
-      const timer = 5 * 1000;
+      const timer = 5 * 1000
       const { result } = renderHook(() =>
         useCountdownTimer({ timer, autostart: false })
-      );
+      )
 
       act(() => {
-        result.current.start();
-        jest.runAllTimers();
-      });
+        result.current.start()
+        jest.runAllTimers()
+      })
 
-      expect(result.current.countdown).toBe(timer);
-      expect(result.current.isRunning).toBe(false);
-    });
-  });
+      expect(result.current.countdown).toBe(timer)
+      expect(result.current.isRunning).toBe(false)
+    })
+  })
 
   describe('return methods', () => {
     it('start - starts countdown', () => {
-      const timer = 5 * 1000;
-      const { result } = renderHook(() => useCountdownTimer({ timer }));
+      const timer = 5 * 1000
+      const { result } = renderHook(() => useCountdownTimer({ timer }))
 
-      expect(result.current.countdown).toBe(timer);
+      expect(result.current.countdown).toBe(timer)
 
       act(() => {
-        result.current.start();
-        jest.advanceTimersByTime(1000);
-      });
+        result.current.start()
+        jest.advanceTimersByTime(1000)
+      })
 
-      expect(result.current.countdown).toBe(4 * 1000);
-    });
+      expect(result.current.countdown).toBe(4 * 1000)
+    })
 
     it('pause - stops countdown', () => {
-      const interval = 1000;
-      const timer = 5 * interval;
-      const { result } = renderHook(() => useCountdownTimer({ timer }));
+      const interval = 1000
+      const timer = 5 * interval
+      const { result } = renderHook(() => useCountdownTimer({ timer }))
 
       act(() => {
-        result.current.start();
-        jest.advanceTimersByTime(interval);
-        result.current.pause();
-        jest.advanceTimersByTime(interval);
-      });
+        result.current.start()
+        jest.advanceTimersByTime(interval)
+        result.current.pause()
+        jest.advanceTimersByTime(interval)
+      })
 
-      expect(result.current.countdown).toBe(4 * interval);
-    });
+      expect(result.current.countdown).toBe(4 * interval)
+    })
 
     it('reset - sets countdown to initial timer', () => {
-      const interval = 1000;
-      const timer = 5 * interval;
-      const { result } = renderHook(() => useCountdownTimer({ timer }));
+      const interval = 1000
+      const timer = 5 * interval
+      const { result } = renderHook(() => useCountdownTimer({ timer }))
 
       act(() => {
-        result.current.start();
-        jest.advanceTimersByTime(interval);
-      });
+        result.current.start()
+        jest.advanceTimersByTime(interval)
+      })
 
-      expect(result.current.countdown).toBe(4 * interval);
+      expect(result.current.countdown).toBe(4 * interval)
 
       act(() => {
-        result.current.reset();
-        jest.advanceTimersByTime(interval);
-      });
+        result.current.reset()
+        jest.advanceTimersByTime(interval)
+      })
 
-      expect(result.current.isRunning).toBe(false);
-      expect(result.current.countdown).toBe(timer);
-    });
-  });
+      expect(result.current.isRunning).toBe(false)
+      expect(result.current.countdown).toBe(timer)
+    })
+  })
 
   describe('callbacks', () => {
     it('onReset - fires when reset() called', () => {
-      const timer = 5 * 1000;
-      const onReset = jest.fn();
-      const { result } = renderHook(() =>
-        useCountdownTimer({ timer, onReset })
-      );
+      const timer = 5 * 1000
+      const onReset = jest.fn()
+      const { result } = renderHook(() => useCountdownTimer({ timer, onReset }))
 
       act(() => {
-        result.current.reset();
-      });
+        result.current.reset()
+      })
 
-      expect(onReset).toHaveBeenCalledTimes(1);
-    });
+      expect(onReset).toHaveBeenCalledTimes(1)
+    })
 
     it('onExpire w/o expireImmediate - fires one interval after countdown reaches 0', () => {
-      const interval = 1000;
-      const timer = 5 * interval;
-      const onExpire = jest.fn();
+      const interval = 1000
+      const timer = 5 * interval
+      const onExpire = jest.fn()
       renderHook(() =>
         useCountdownTimer({
           timer,
@@ -230,25 +228,25 @@ describe('useCountdownTimer', () => {
           onExpire,
           autostart: true,
         })
-      );
+      )
 
       act(() => {
-        jest.advanceTimersByTime(timer);
-      });
+        jest.advanceTimersByTime(timer)
+      })
 
-      expect(onExpire).toHaveBeenCalledTimes(0);
+      expect(onExpire).toHaveBeenCalledTimes(0)
 
       act(() => {
-        jest.advanceTimersByTime(interval);
-      });
+        jest.advanceTimersByTime(interval)
+      })
 
-      expect(onExpire).toHaveBeenCalledTimes(1);
-    });
+      expect(onExpire).toHaveBeenCalledTimes(1)
+    })
 
     it('onExpire w/ expireImmediate - fires immediately after countdown reaches 0', () => {
-      const interval = 1000;
-      const timer = 5 * interval;
-      const onExpire = jest.fn();
+      const interval = 1000
+      const timer = 5 * interval
+      const onExpire = jest.fn()
       renderHook(() =>
         useCountdownTimer({
           timer,
@@ -257,19 +255,19 @@ describe('useCountdownTimer', () => {
           autostart: true,
           expireImmediate: true,
         })
-      );
+      )
 
       act(() => {
-        jest.advanceTimersByTime(timer);
-      });
+        jest.advanceTimersByTime(timer)
+      })
 
-      expect(onExpire).toHaveBeenCalledTimes(1);
+      expect(onExpire).toHaveBeenCalledTimes(1)
 
       act(() => {
-        jest.advanceTimersByTime(interval);
-      });
+        jest.advanceTimersByTime(interval)
+      })
 
-      expect(onExpire).toHaveBeenCalledTimes(1);
-    });
-  });
-});
+      expect(onExpire).toHaveBeenCalledTimes(1)
+    })
+  })
+})

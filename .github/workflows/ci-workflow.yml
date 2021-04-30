@@ -9,19 +9,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
-      - name: Cache Node.js modules
-        uses: actions/cache@v1
+          node-version: '16.x'
+      - name: Cache npm
+        uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
       - name: Install package dependencies
         run: npm ci
+      - name: Lint
+        run: npm run lint --if-present
       - name: Build package
         run: npm run build --if-present
       - name: Test package

@@ -1,37 +1,44 @@
-import typescript from 'rollup-plugin-typescript2';
-import commonjs from 'rollup-plugin-commonjs';
-import external from 'rollup-plugin-peer-deps-external';
-import resolve from 'rollup-plugin-node-resolve';
-import url from '@rollup/plugin-url';
+import path from 'path'
+import commonjs from '@rollup/plugin-commonjs'
+import resolve from '@rollup/plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
+import pkg from './package.json'
 
-import pkg from './package.json';
+const input = 'src/index.ts'
+const external = [
+  ...Object.keys(pkg.dependencies || {}),
+  ...Object.keys(pkg.peerDependencies || {}),
+]
 
-const tsconfigOverride = { exclude: ['src/**/*.test.ts'] };
-
-export default {
-  input: 'src/index.ts',
-  output: [
-    {
-      file: pkg.main,
+export default [
+  {
+    input,
+    output: {
+      dir: path.dirname(pkg.main),
       format: 'cjs',
       exports: 'named',
       sourcemap: true,
     },
-    {
+    plugins: [
+      resolve(),
+      typescript({
+        declaration: true,
+        declarationDir: path.dirname(pkg.module),
+        exclude: ['src/**/*.test.ts'],
+      }),
+      commonjs(),
+    ],
+    external,
+  },
+  {
+    input,
+    output: {
       file: pkg.module,
-      format: 'es',
+      format: 'esm',
       exports: 'named',
       sourcemap: true,
     },
-  ],
-  plugins: [
-    external(),
-    url({ exclude: ['**/*.svg'] }),
-    resolve(),
-    typescript({
-      clean: true,
-      tsconfigOverride,
-    }),
-    commonjs(),
-  ],
-};
+    plugins: [resolve(), typescript(), commonjs()],
+    external,
+  },
+]

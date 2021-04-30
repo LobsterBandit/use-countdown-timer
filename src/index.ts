@@ -1,22 +1,22 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 export interface ICountdownTimerParams {
-  timer: number;
-  interval?: number;
-  autostart?: boolean;
-  expireImmediate?: boolean;
-  resetOnExpire?: boolean;
-  onExpire?: () => void;
-  onReset?: () => void;
+  timer: number
+  interval?: number
+  autostart?: boolean
+  expireImmediate?: boolean
+  resetOnExpire?: boolean
+  onExpire?: () => void
+  onReset?: () => void
 }
 
 export type CountdownTimerResults = {
-  countdown: number;
-  isRunning: boolean;
-  start: () => void;
-  reset: () => void;
-  pause: () => void;
-};
+  countdown: number
+  isRunning: boolean
+  start: () => void
+  reset: () => void
+  pause: () => void
+}
 
 export function useCountdownTimer({
   timer,
@@ -27,46 +27,46 @@ export function useCountdownTimer({
   onExpire,
   onReset,
 }: ICountdownTimerParams): CountdownTimerResults {
-  const [countdown, setCountdown] = useState(timer);
-  const [canStart, setCanStart] = useState(autostart);
-  const [isRunning, setIsRunning] = useState(false);
+  const [countdown, setCountdown] = useState(timer)
+  const [canStart, setCanStart] = useState(autostart)
+  const [isRunning, setIsRunning] = useState(false)
 
   function start() {
     // must explicitly call reset() before starting an expired timer
     if (countdown !== 0) {
-      setCanStart(true);
+      setCanStart(true)
     }
   }
 
   function pause() {
-    setCanStart(false);
-    setIsRunning(false);
+    setCanStart(false)
+    setIsRunning(false)
   }
 
   function initStopped(time: number) {
-    setCanStart(false);
-    setIsRunning(false);
-    setCountdown(time);
+    setCanStart(false)
+    setIsRunning(false)
+    setCountdown(time)
   }
 
   const reset = useCallback(() => {
-    initStopped(timer);
+    initStopped(timer)
     if (onReset && typeof onReset === 'function') {
-      onReset();
+      onReset()
     }
-  }, [timer, onReset]);
+  }, [timer, onReset])
 
   const expire = useCallback(() => {
-    initStopped(resetOnExpire ? timer : 0);
+    initStopped(resetOnExpire ? timer : 0)
     if (onExpire && typeof onExpire === 'function') {
-      onExpire();
+      onExpire()
     }
-  }, [timer, onExpire, resetOnExpire]);
+  }, [timer, onExpire, resetOnExpire])
 
-  const countdownRef = useRef<number>(timer);
+  const countdownRef = useRef<number>(timer)
   useEffect(() => {
-    countdownRef.current = countdown;
-  }, [countdown]);
+    countdownRef.current = countdown
+  }, [countdown])
 
   useEffect(() => {
     function tick() {
@@ -74,21 +74,21 @@ export function useCountdownTimer({
         countdownRef.current / 1000 <= 0 ||
         (expireImmediate && (countdownRef.current - interval) / 1000 <= 0)
       ) {
-        expire();
+        expire()
       } else {
-        setCountdown(prev => prev - interval);
+        setCountdown((prev) => prev - interval)
       }
     }
 
-    let id: NodeJS.Timeout;
+    let id: NodeJS.Timeout
     if (canStart) {
-      id = setInterval(tick, interval);
+      id = setInterval(tick, interval)
       if (!isRunning) {
-        setIsRunning(true);
+        setIsRunning(true)
       }
     }
-    return () => clearInterval(id);
-  }, [expire, canStart, interval, expireImmediate, isRunning]);
+    return () => clearInterval(id)
+  }, [expire, canStart, interval, expireImmediate, isRunning])
 
   return {
     countdown,
@@ -96,5 +96,5 @@ export function useCountdownTimer({
     reset,
     pause,
     isRunning,
-  };
+  }
 }
