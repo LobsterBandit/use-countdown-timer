@@ -23,7 +23,6 @@ export default [
   {
     input,
     output: {
-      // file: pkg.main,
       dir: path.dirname(pkg.main),
       format: 'cjs',
       exports: 'named',
