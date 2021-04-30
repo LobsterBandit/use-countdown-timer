@@ -202,6 +202,31 @@ describe('useCountdownTimer', () => {
       expect(result.current.isRunning).toBe(false)
       expect(result.current.countdown).toBe(timer)
     })
+
+    it('reset and start can be called consecutively', () => {
+      const interval = 1000
+      const timer = 5 * interval
+      const { result } = renderHook(() =>
+        useCountdownTimer({ timer, resetOnExpire: false })
+      )
+
+      act(() => {
+        result.current.start()
+        jest.runAllTimers()
+      })
+
+      expect(result.current.isRunning).toBe(false)
+      expect(result.current.countdown).toBe(0)
+
+      act(() => {
+        result.current.reset()
+        result.current.start()
+        jest.advanceTimersByTime(interval)
+      })
+
+      expect(result.current.countdown).not.toBe(timer)
+      expect(result.current.isRunning).toBe(true)
+    })
   })
 
   describe('callbacks', () => {
