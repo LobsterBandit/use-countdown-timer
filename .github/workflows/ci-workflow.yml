@@ -19,7 +19,6 @@ jobs:
           key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
       - name: Install package dependencies
         run: npm ci
       - name: Lint
