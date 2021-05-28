@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: '16.x'
       - name: Cache npm
-        uses: actions/cache@v2.1.5
+        uses: actions/cache@v2.1.6
         with:
           path: ~/.npm
           key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
