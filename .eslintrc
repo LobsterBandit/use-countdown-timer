@@ -4,6 +4,7 @@
     "project": "./tsconfig.json"
   },
   "extends": [
+    "airbnb",
     "airbnb-typescript",
     "prettier",
     "plugin:@typescript-eslint/eslint-recommended",

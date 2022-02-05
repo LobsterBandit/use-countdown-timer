@@ -24,6 +24,7 @@ export default [
       typescript({
         declaration: true,
         declarationDir: path.dirname(pkg.module),
+        declarationMap: true,
         exclude: ['src/**/*.test.ts'],
       }),
       commonjs(),
@@ -38,7 +39,11 @@ export default [
       exports: 'named',
       sourcemap: true,
     },
-    plugins: [resolve(), typescript(), commonjs()],
+    plugins: [
+      resolve(),
+      typescript(),
+      commonjs(),
+    ],
     external,
   },
 ]
