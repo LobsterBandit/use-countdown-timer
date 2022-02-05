@@ -174,9 +174,14 @@ describe('useCountdownTimer', () => {
 
       act(() => {
         result.current.start()
-        jest.advanceTimersByTime(interval)
+        jest.advanceTimersByTime(interval + 1)
+      })
+
+      expect(result.current.countdown).toBe(4 * interval)
+
+      act(() => {
         result.current.pause()
-        jest.advanceTimersByTime(interval)
+        jest.advanceTimersByTime(interval + 1)
       })
 
       expect(result.current.countdown).toBe(4 * interval)
@@ -256,7 +261,7 @@ describe('useCountdownTimer', () => {
       )
 
       act(() => {
-        jest.advanceTimersByTime(timer)
+        jest.advanceTimersByTime(timer + interval)
       })
 
       expect(onExpire).toHaveBeenCalledTimes(0)
@@ -283,7 +288,7 @@ describe('useCountdownTimer', () => {
       )
 
       act(() => {
-        jest.advanceTimersByTime(timer)
+        jest.advanceTimersByTime(timer + interval)
       })
 
       expect(onExpire).toHaveBeenCalledTimes(1)
