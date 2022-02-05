@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useCountdownTimer } from 'use-countdown-timer'
 
 export default function App() {
@@ -12,7 +12,7 @@ export default function App() {
       setActions((actions) => [...actions, 'Reset Callback'])
     },
   })
-  const [actions, setActions] = React.useState<string[]>([])
+  const [actions, setActions] = useState<string[]>([])
 
   const logAction = (message: string, action: () => void) => {
     setActions((actions) => [...actions, message])
